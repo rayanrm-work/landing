@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora DZ - Votre Demande</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">Nexora DZ</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html#why-choose-us">Pourquoi Nous ?</a></li>
+                    <li><a href="index.html#offers">Nos Offres</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="confirmation-page">
+        <div class="container">
+            <h2>Votre Demande de Devis</h2>
+            <div class="confirmation-content">
+                <h3>Merci pour votre intérêt !</h3>
+                <p>Veuillez vérifier le récapitulatif de votre demande ci-dessous. Nous vous contacterons très prochainement pour discuter des détails et vous fournir un devis personnalisé.</p>
+
+                <div class="confirmation-summary">
+                    <h4>Récapitulatif des offres sélectionnées :</h4>
+                    <ul id="selected-offers-list"></ul>
+                    <div class="total-price">Total Estimé: <span id="confirmation-total">0 DA</span></div>
+                </div>
+
+                <div class="confirmation-form">
+                    <h4>Vos coordonnées pour la demande :</h4>
+                    <form id="demand-form">
+                        <input type="text" name="Nom" id="demand-name" placeholder="Votre Nom Complet" required>
+                        <input type="email" name="Email" id="demand-email" placeholder="Votre Email" required>
+                        <input type="tel" name="Téléphone" id="demand-phone" placeholder="Votre Numéro de Téléphone (ex: +213 5XX XXX XXX)" required>
+                        <textarea name="Message" id="demand-message" placeholder="Des détails supplémentaires ou questions ? (Optionnel)"></textarea>
+                        <button type="submit" class="btn">Envoyer via WhatsApp <i class="fab fa-whatsapp"></i></button>
+                    </form>
+
+                    <div id="demand-message-status" class="confirmation-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-col logo-col">
+                <a href="index.html" class="logo">Nexora DZ</a>
+                <p>Votre partenaire pour des solutions digitales élégantes et performantes en Algérie. Nous transformons vos ambitions en succès concret.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61578220463897" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/213559387068" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/nexora.dz/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="index.html#why-choose-us"><i class="fas fa-chevron-right"></i> Pourquoi Nous ?</a></li>
+                    <li><a href="index.html#offers"><i class="fas fa-chevron-right"></i> Nos Offres</a></li>
+                    <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Politique de Confidentialité</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Conditions Générales</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contactez-nous</h3>
+                <ul>
+                    <li><a href="tel:+213559387068"><i class="fas fa-phone-alt"></i> +213 559 38 70 68</a></li>
+                    <li><a href="mailto:dznexora@gmail.com"><i class="fas fa-envelope"></i> dznexora@gmail.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Bejaia, Algérie</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Sam - Jeu : 8h00 - 20h00</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Nexora DZ. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/213559387068" class="whatsapp-btn" target="_blank" aria-label="Contactez-nous sur WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            this.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectedOffersList = document.getElementById('selected-offers-list');
+            const confirmationTotalSpan = document.getElementById('confirmation-total');
+            const demandForm = document.getElementById('demand-form');
+            const demandMessageStatus = document.getElementById('demand-message-status');
+
+            const savedCart = localStorage.getItem('nexoraCart');
+            let cart = [];
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+
+            if (cart.length === 0) {
+                window.location.href = 'index.html#offers';
+                return;
+            }
+
+            let total = 0;
+            selectedOffersList.innerHTML = '';
+
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>${item.price === 0 ? 'Sur Devis' : item.price.toLocaleString('fr-DZ') + ' DA'}</span>
+                `;
+                selectedOffersList.appendChild(listItem);
+
+                if (item.price !== 0) {
+                    total += item.price;
+                }
+            });
+
+            confirmationTotalSpan.textContent = total.toLocaleString('fr-DZ') + ' DA';
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageFromCart = urlParams.get('message');
+            if (messageFromCart) {
+                document.getElementById('demand-message').value = decodeURIComponent(messageFromCart);
+            }
+
+            // Gérer la soumission du formulaire
+            demandForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Empêcher le rechargement de la page
+
+    const name = document.getElementById('demand-name').value;
+    const email = document.getElementById('demand-email').value;
+    const phone = document.getElementById('demand-phone').value;
+    const message = document.getElementById('demand-message').value;
+
+    let cart = JSON.parse(localStorage.getItem('nexoraCart')) || [];
+    let offersText = '';
+    let total = 0;
+
+    cart.forEach(item => {
+        offersText += `- ${item.name} : ${item.price === 0 ? 'Sur Devis' : item.price.toLocaleString('fr-DZ') + ' DA'}\n`;
+        if (item.price !== 0) {
+            total += item.price;
+        }
+    });
+
+    const totalText = total ? `\nTotal estimé : ${total.toLocaleString('fr-DZ')} DA` : '';
+
+    const fullMessage =
+        `📋 *Nouvelle Demande de Devis Nexora DZ*\n\n` +
+        `👤 *Nom* : ${name}\n` +
+        `📧 *Email* : ${email}\n` +
+        `📱 *Téléphone* : ${phone}\n\n` +
+        `🛒 *Offres sélectionnées* :\n${offersText}${totalText}\n\n` +
+        (message ? `📝 *Message* :\n${message}` : '');
+
+    const whatsappURL = `https://wa.me/213559387068?text=${encodeURIComponent(fullMessage)}`;
+
+    // Redirection vers WhatsApp
+    window.open(whatsappURL, '_blank');
+
+    // Vider le panier après envoi
+    localStorage.removeItem('nexoraCart');
+});
+
+
+            const hiddenItems = document.getElementById('hidden-cart-items');
+            const hiddenTotal = document.getElementById('hidden-cart-total');
+
+            let content = "";
+            cart.forEach(item => {
+                content += `- ${item.name} : ${item.price === 0 ? 'Sur Devis' : item.price.toLocaleString('fr-DZ') + ' DA'}\n`;
+            });
+
+            hiddenItems.value = content;
+            hiddenTotal.value = total.toLocaleString('fr-DZ') + ' DA';
+        });
+    </script>
+
+</body>
+</html>
