@@ -177,7 +177,7 @@ section h2::after {
     height: 20px;
     cursor: pointer;
     z-index: 1001;
-    margin-left: 220px;
+    margin-left: 200px;
 }
 
 .menu-toggle span {
